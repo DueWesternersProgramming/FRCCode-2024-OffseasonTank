@@ -16,10 +16,10 @@ public final class Constants {
 
   public static final class DriveConstants{
 
-    public static final int kLeft1MotorPort = 2;
-    public static final int kLeft2MotorPort = 3;
-    public static final int kRight1MotorPort = 4;
-    public static final int kRight2MotorPort = 5;
+    public static final int kLeft1MotorPort = 1;
+    public static final int kLeft2MotorPort = 4;
+    public static final int kRight1MotorPort = 3;
+    public static final int kRight2MotorPort = 2;
 
     public static final double kFastSpeedMultiplier = 0.95;
     public static final double kNormalSpeedMultiplier = 0.7325;
