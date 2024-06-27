@@ -15,10 +15,11 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
-
+  
   private CANSparkMax motor1L, motor2L, motor1R, motor2R;
   private RelativeEncoder encoderL, encoderR;
   private AHRS ahrs;
@@ -43,8 +44,8 @@ public class DriveSubsystem extends SubsystemBase {
       motor2R = new CANSparkMax(DriveConstants.kRight2MotorPort,CANSparkMax.MotorType.kBrushless);
       motor2L.follow(motor1L);
       motor2R.follow(motor1R);
-      motor1R.setInverted(true);
-      motor2R.setInverted(true);
+      motor1R.setInverted(false);
+      motor2R.setInverted(false);
       motor1L.setInverted(false);
       motor2L.setInverted(false);
       m_drive = new DifferentialDrive(motor1L, motor1R);
@@ -230,6 +231,12 @@ public class DriveSubsystem extends SubsystemBase {
     while(ahrs.isCalibrating()) {
     }
   }
+  public Command gyroReset() {
+        return run(() -> {
+            // init
+            zeroHeading();
+        });
+    }
 
   public boolean gyroIsCalibrating() {
     return ahrs.isCalibrating();

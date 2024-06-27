@@ -45,7 +45,7 @@ public class RobotContainer {
     () -> driverController.getRawAxis(4)));
 
     m_autoPositionChooser.addOption("Do Nothing", new AutoDoNothing(driveSubsystem));
-    m_autoPositionChooser.addOption("Calibrate Gryo", new AutoCalibrateGyro(driveSubsystem));
+    m_autoPositionChooser.addOption("Calibrate Gryo", driveSubsystem.gyroReset());
 
     Shuffleboard.getTab("Autonomous").add(m_autoPositionChooser);
 

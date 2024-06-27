@@ -44,7 +44,7 @@ public class ArcadeDrive extends Command {
     if (Math.abs(m_right.getAsDouble()) < OperatorConstants.kControllerDeadZone){
       m_rightModified = 0.0;
     }
-    m_driveSubsystem.arcadeDrive(m_leftModified, m_rightModified);
+    m_driveSubsystem.arcadeDrive(m_leftModified, -m_rightModified);
   }
 
   // Called once the command ends or is interrupted.
