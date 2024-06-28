@@ -26,23 +26,13 @@ public final class Constants {
     public static final double kSlowSpeedMultiplier = 0.4;
     public static final double kAutoSpeedMultiplier = 0.65;
 
-    public static final double kChargeForwardBalanceTolerance = -8;
-    public static final double kChargeBackwardBalanceTolerance = 10;
-
-    public static final double kChargeForwardInitialStartTolerance = 4;
-    public static final double kChargeBackwardInitialStartTolerance = -4;
-    public static final double kChargeForwardModifiedStartTolerance = 8;
-    public static final double kChargeBackwardModifiedStartTolerance = -6;
-
     public static final double kMaxAccel = 12;
     public static final int kLeft = -1;
     public static final int kRight = 1;
     public static final double kDriveWidth = 25;
 
-    //public static final double kDefaultP = .00038;
-    // public static final double kDefaultI = .0000011;
-    // public static final double kDefaultD = .0001;
-    public static final double kDefaultP = .00030;
+
+    public static final double kDefaultP = .00530;
     public static final double kDefaultI = .00000011;
     public static final double kDefaultD = .0001;
     public static final int kEncoderCPR = 1024;
@@ -76,7 +66,7 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     public static final int kAsisstControllerPort = 1;
 
-    public static final double kControllerDeadZone = 0.01;
+    public static final double kControllerDeadZone = 0.3;
 
     public static final int kPDPPort = 16;
 

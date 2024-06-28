@@ -43,12 +43,12 @@ public class DriveSubsystem extends SubsystemBase {
       motor1R = new CANSparkMax(DriveConstants.kRight1MotorPort,CANSparkMax.MotorType.kBrushless);
       motor2R = new CANSparkMax(DriveConstants.kRight2MotorPort,CANSparkMax.MotorType.kBrushless);
       motor2L.follow(motor1L);
-      motor2R.follow(motor1R);
+      motor1R.follow(motor2R);
       motor1R.setInverted(false);
       motor2R.setInverted(false);
       motor1L.setInverted(false);
       motor2L.setInverted(false);
-      m_drive = new DifferentialDrive(motor1L, motor1R);
+      m_drive = new DifferentialDrive(motor1L, motor2R);
       encoderL = motor1L.getEncoder();
       encoderR = motor1R.getEncoder();
       encoderL.setVelocityConversionFactor(0.00398982267005903741284755709676/10.71);
@@ -57,6 +57,11 @@ public class DriveSubsystem extends SubsystemBase {
       encoderR.setPositionConversionFactor(0.00398982267005903741284755709676/10.71);
       resetEncoders();
       updatePID();
+      motor1L.setIdleMode(IdleMode.kBrake);
+      motor2L.setIdleMode(IdleMode.kBrake);
+      motor1R.setIdleMode(IdleMode.kBrake);
+      motor2R.setIdleMode(IdleMode.kBrake);
+
     }
     catch (Exception e){
       System.out.println("Motor setup error: " + e + "\n");
@@ -85,22 +90,6 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
-  public boolean toggleBrake(){
-    if (motor1L.getIdleMode().equals(IdleMode.kCoast)){
-      motor1L.setIdleMode(IdleMode.kBrake);
-      motor2L.setIdleMode(IdleMode.kBrake);
-      motor1R.setIdleMode(IdleMode.kBrake);
-      motor2R.setIdleMode(IdleMode.kBrake);
-      return true;
-    }
-    else{
-      motor1L.setIdleMode(IdleMode.kCoast);
-      motor2L.setIdleMode(IdleMode.kCoast);
-      motor1R.setIdleMode(IdleMode.kCoast);
-      motor2R.setIdleMode(IdleMode.kCoast);
-      return false;
-    }
-  }
 
   private void updatePID() {
     motor1L.getPIDController().setP(PID_P);
