@@ -29,9 +29,6 @@ public class DriveDistance extends Command {
     m_drive = drive;
     m_timer = new Timer();
     addRequirements(m_drive);
-    m_profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(m_maxSpeed * DriveConstants.kMaxRobotSpeed, (DriveConstants.kMaxAccel*12)),
-                                                new TrapezoidProfile.State(m_distance, 0),
-                                                new TrapezoidProfile.State(0, m_drive.getVelocity()));
   }
 
   /**
@@ -49,9 +46,6 @@ public class DriveDistance extends Command {
     m_timer = new Timer();
     m_endPower = endPower;
     addRequirements(m_drive);
-    m_profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(m_maxSpeed * DriveConstants.kMaxRobotSpeed, (DriveConstants.kMaxAccel*12)),
-                                                new TrapezoidProfile.State(m_distance, endPower * DriveConstants.kMaxRobotSpeed),
-                                                new TrapezoidProfile.State(0, (m_drive.getVelocity() / DriveConstants.kMaxRPM) * DriveConstants.kMaxRobotSpeed));
   }
 
   @Override

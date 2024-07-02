@@ -45,7 +45,6 @@ public class RobotContainer {
     () -> driverController.getRawAxis(4)));
 
     m_autoPositionChooser.addOption("Do Nothing", new AutoDoNothing(driveSubsystem));
-    m_autoPositionChooser.addOption("Calibrate Gryo", driveSubsystem.gyroReset());
 
     Shuffleboard.getTab("Autonomous").add(m_autoPositionChooser);
 
@@ -55,7 +54,6 @@ public class RobotContainer {
 
 
   private void configureButttonBindings() {
-    new POVButton(driverController, 0).onTrue(new TurnDegrees(driveSubsystem, driveSubsystem.getHeading()-driveSubsystem.getYaw(), 0.5, DriveConstants.kLeft, 0));
     new JoystickButton(driverController, 3);
   }
 

@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
@@ -22,7 +21,6 @@ public class DriveSubsystem extends SubsystemBase {
   
   private CANSparkMax motor1L, motor2L, motor1R, motor2R;
   private RelativeEncoder encoderL, encoderR;
-  private AHRS ahrs;
   private DifferentialDrive m_drive;
   private double PID_P = DriveConstants.kDefaultP;
   private double PID_I = DriveConstants.kDefaultI;
@@ -46,8 +44,8 @@ public class DriveSubsystem extends SubsystemBase {
       motor2R.follow(motor1R);
       motor1R.setInverted(false);
       motor2R.setInverted(false);
-      motor1L.setInverted(false);
-      motor2L.setInverted(false);
+      motor1L.setInverted(true);
+      motor2L.setInverted(true);
       m_drive = new DifferentialDrive(motor1L, motor1R);
       encoderL = motor1L.getEncoder();
       encoderR = motor1R.getEncoder();
@@ -62,12 +60,7 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println("Motor setup error: " + e + "\n");
       e.printStackTrace();
     }
-    try {
-      ahrs = new AHRS(SerialPort.Port.kMXP);
-    }
-    catch (Exception e){
-      System.out.println("Gyro error: " + e + "\n");
-    }
+    
   }
 
   public void arcadeDrive(double drive, double rot){
@@ -137,11 +130,6 @@ public class DriveSubsystem extends SubsystemBase {
     System.out.println((m_fwd / DriveConstants.kMaxRobotSpeed) * DriveConstants.kMaxRPM);
     motor1L.getPIDController().setReference((m_fwd / DriveConstants.kMaxRobotSpeed) * DriveConstants.kMaxRPM , ControlType.kVelocity);
     motor1R.getPIDController().setReference((m_fwd / DriveConstants.kMaxRobotSpeed) * DriveConstants.kMaxRPM , ControlType.kVelocity);
-  }
-
-  public void setCustomRotation() {
-    pitchRotationOffset = ahrs.getPitch();
-    rotationOffset = ahrs.getRoll();
   }
 
   public void setTurnTargetMovementResult(double result) {
@@ -222,62 +210,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_drive.setMaxOutput(maxOutput);
   }
 
-  public double getGyroAngle() {
-    return (ahrs.getAngle());
-  }
-
-  public void calibrateGyro() {
-    ahrs.reset();
-    while(ahrs.isCalibrating()) {
-    }
-  }
-  public Command gyroReset() {
-        return run(() -> {
-            // init
-            zeroHeading();
-        });
-    }
-
-  public boolean gyroIsCalibrating() {
-    return ahrs.isCalibrating();
-  }
-
-  public void zeroHeading() {
-    ahrs.reset();
-  }
-
-  public double getHeading() {
-    return ahrs.getRotation2d().getDegrees();
-  }
-
-  public double getYaw() {
-    return ahrs.getYaw();
-  }
-
-  public double getRotation() {
-    if (rotationOffset > 0){
-      return ahrs.getRoll() - rotationOffset;
-    }
-    else if (rotationOffset < 0){
-      return ahrs.getRoll() + rotationOffset;
-    }
-    return ahrs.getRoll();
-  }
-
-  public double getPitch() {
-    if (pitchRotationOffset > 0){
-      return ahrs.getPitch() + pitchRotationOffset;
-    }
-    else if (pitchRotationOffset < 0){
-      return ahrs.getPitch() - pitchRotationOffset;
-    }
-    return ahrs.getPitch();
-  }
-
-  public double getTurnRate() {
-    return ahrs.getRate();
-  }
-
   public void restorePID_Defaults() {
     PID_P = DriveConstants.kDefaultP;
     PID_I = DriveConstants.kDefaultI;
@@ -314,10 +246,6 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_drive.feed();
-    SmartDashboard.putNumber("Angle", ahrs.getAngle());
-    SmartDashboard.putNumber("Roll", ahrs.getRoll());
-    SmartDashboard.putNumber("Custom Roll", getRotation());
-    SmartDashboard.putNumber("Pitch", ahrs.getPitch());
     SmartDashboard.putNumber("Encoder L", encoderL.getPosition());
     SmartDashboard.putNumber("Encoder R", encoderR.getPosition());
     SmartDashboard.putNumber("Speed L", motor1L.get());
@@ -328,7 +256,6 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Motor2R Current", motor2R.getOutputCurrent());
     SmartDashboard.putNumber("Fast Mode", speed);
     SmartDashboard.putBoolean("Brake Mode", isBrake());
-    SmartDashboard.putNumber("Custom Pitch", getPitch());
     SmartDashboard.putNumber("Offset", pitchRotationOffset);
   }
 }

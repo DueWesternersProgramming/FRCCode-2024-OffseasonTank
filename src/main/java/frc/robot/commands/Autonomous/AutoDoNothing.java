@@ -8,7 +8,6 @@ public class AutoDoNothing extends SequentialCommandGroup{
     
     public AutoDoNothing(DriveSubsystem driveSubsystem) {
         addCommands(
-            driveSubsystem.gyroReset(),
             new WaitCommand(14));
       }
 }
