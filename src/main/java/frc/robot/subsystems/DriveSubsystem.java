@@ -64,18 +64,10 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void arcadeDrive(double drive, double rot){
-    if (speed == 1){
-      m_drive.arcadeDrive(drive * DriveConstants.kNormalSpeedMultiplier, rot * DriveConstants.kNormalSpeedMultiplier);
-    }
-    else if (speed == 2){
-      m_drive.arcadeDrive(drive * DriveConstants.kFastSpeedMultiplier, rot * DriveConstants.kFastSpeedMultiplier);
-    }
-    else if (speed == 3){
-      m_drive.arcadeDrive(drive * DriveConstants.kAutoSpeedMultiplier, rot * DriveConstants.kAutoSpeedMultiplier);
-    }
-    else {
-      m_drive.arcadeDrive(drive * DriveConstants.kSlowSpeedMultiplier, rot * DriveConstants.kSlowSpeedMultiplier);
-    }
+    
+    m_drive.arcadeDrive(drive * .55, -rot * 0.35);
+    
+    
   }
 
   public boolean toggleBrake(){
