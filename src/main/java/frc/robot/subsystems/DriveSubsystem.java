@@ -65,7 +65,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void arcadeDrive(double drive, double rot){
     
-    m_drive.arcadeDrive(drive * .55, -rot * 0.35);
+    m_drive.arcadeDrive(drive * .7, -rot * 0.35);
     
     
   }
